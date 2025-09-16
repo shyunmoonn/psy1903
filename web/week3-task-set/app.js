@@ -133,7 +133,7 @@ alert('You answered ' + answer3 + ' in ' + result3 + ' seconds.' + ' Your answer
 */
 
 
-
+/*
 // Create variables to store references to elements on the page
 let start1 = Date.now()
 
@@ -176,3 +176,26 @@ form.addEventListener('submit', function (event) {
 
     form.style.display = 'none';
 });
+*/
+
+//random number
+let randomNum1 = Math.floor(Math.random() * 10) + 1;
+let randomNum2 = Math.floor(Math.random() * 10) + 1;
+
+let response = prompt('What is ' + randomNum1 + ' + ' + randomNum2 + '?');
+
+// variables
+let feedback = '';
+
+let correct = (randomNum1 + randomNum2);
+
+//conditional messages
+if (response == correct) {
+    feedback = 'Correct!'
+} else if (response == (correct - 1) || response == (correct + 2)) {
+    feedback = 'You were close!';
+} else {
+    feedback = 'Incorrect.';
+}
+
+alert(feedback + ' The expected answer is ' + (correct) + ' .');
