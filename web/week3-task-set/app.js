@@ -48,14 +48,18 @@ num2.innerHTML = randomNum2;
 
 let response = prompt('What is ' + randomNum1 + ' + ' + randomNum2 + '?');
 
+// variables
 let feedback = '';
 
-if (response == 10) {
+let correct = (randomNum1 + randomNum2);
+
+//conditional messages
+if (response == correct) {
     feedback = 'Correct!';
-} else if (response == 9 || response == 11) {
+} else if (response == (correct - 1) || (correct + 2)) {
     feedback = 'You were close!';
 } else {
     feedback = 'Incorrect.';
 }
 
-alert(feedback + ' The expected answer is 10.');
+alert(feedback + ' The expected answer is ' + (correct));
