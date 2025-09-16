@@ -66,6 +66,8 @@ if (response == correct) {
 alert(feedback + ' The expected answer is ' + (correct));
 */
 
+/*
+
 let age = prompt('How old are you?');
 if (age < 12) {
     alert('Child');
@@ -76,4 +78,11 @@ if (18 > age >= 12) {
 if (age >= 18) {
     alert('Adult');
 }
+*/
 
+response = prompt('Please enter a whole number')
+if (response % 2 == 0) {
+    alert('The number you entered was even.')
+} else {
+    alert('The number you entered was odd.');
+}
