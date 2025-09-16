@@ -35,6 +35,7 @@ let count = 8;
 console.log(count % 2 == 0);
 */
 
+/*
 let num1 = document.getElementById('num1');
 let num2 = document.getElementById('num2');
 
@@ -63,3 +64,16 @@ if (response == correct) {
 }
 
 alert(feedback + ' The expected answer is ' + (correct));
+*/
+
+let age = prompt('How old are you?');
+if (age < 12) {
+    alert('Child');
+}
+if (18 > age >= 12) {
+    alert('Teenager');
+}
+if (age >= 18) {
+    alert('Adult');
+}
+
