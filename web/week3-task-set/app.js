@@ -89,6 +89,7 @@ if (response % 2 == 0) {
 }
 */
 
+/*
 alert("In this experiment we will measure your response time. You will be shown a series of simple math equations. Answer these equations as quickly and accurately as you can.")
 
 //random number
@@ -129,5 +130,49 @@ if (answer3 == (randomNum31 + randomNum32)) {
     corin3 = ('CORRECT');
 } else (corin3 = 'INCORRECT');
 alert('You answered ' + answer3 + ' in ' + result3 + ' seconds.' + ' Your answer was ' + corin3);
+*/
 
 
+
+// Create variables to store references to elements on the page
+let start1 = Date.now()
+
+let form = document.getElementsByTagName('form')[0];
+let results = document.getElementById('results');
+
+// Identify elements on the page we will update 
+let num1 = document.getElementById('num1');
+let num2 = document.getElementById('num2');
+
+//random number
+let randomNum1 = Math.floor(Math.random() * 10) + 1;
+let randomNum2 = Math.floor(Math.random() * 10) + 1;
+
+//update elements on page
+num1.innerHTML = randomNum1;
+num2.innerHTML = randomNum2;
+
+
+// Listen for the form to be submitted
+form.addEventListener('submit', function (event) {
+
+    // Prevent the default form submission b
+    event.preventDefault();
+
+    let end1 = Date.now()
+    let result = (end1 - start1) / 1000
+
+    // Collect the response
+    let response = form.elements['problem'].value;
+
+    if (response == (randomNum1 + randomNum2)) {
+        corin = ('CORRECT.');
+    } else (corin = 'INCORRECT.');
+
+    let resultsMessage = ('You answered ' + response + ' in ' + result + ' seconds.' + ' Your answer was ' + corin);
+
+    // Report the results
+    results.innerHTML = resultsMessage;
+
+    form.style.display = 'none';
+});
