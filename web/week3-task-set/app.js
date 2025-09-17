@@ -178,6 +178,7 @@ form.addEventListener('submit', function (event) {
 });
 */
 
+/*
 //random number
 let randomNum1 = Math.floor(Math.random() * 10) + 1;
 let randomNum2 = Math.floor(Math.random() * 10) + 1;
@@ -199,3 +200,47 @@ if (response == correct) {
 }
 
 alert(feedback + ' The expected answer is ' + (correct) + ' .');
+*/
+
+
+alert("In this experiment we will measure your response time. You will be shown a series of simple math equations. Answer these equations as quickly and accurately as you can.")
+
+//random number
+let randomNum11 = Math.floor(Math.random() * 10) + 1;
+let randomNum12 = Math.floor(Math.random() * 10) + 1;
+
+let randomNum21 = Math.floor(Math.random() * 10) + 1;
+let randomNum22 = Math.floor(Math.random() * 10) + 1;
+
+let randomNum31 = Math.floor(Math.random() * 10) + 1;
+let randomNum32 = Math.floor(Math.random() * 10) + 1;
+
+let corin = '';
+
+let start1 = Date.now()
+let answer1 = prompt('What is ' + randomNum11 + ' + ' + randomNum12 + ' ?');
+let end1 = Date.now()
+let result1 = (end1 - start1) / 1000
+if (answer1 == (randomNum11 + randomNum12)) {
+    corin = ('CORRECT');
+} else (corin = 'INCORRECT');
+alert('You answered ' + answer1 + ' in ' + result1 + ' seconds.' + ' Your answer was ' + corin);
+
+
+let start2 = Date.now()
+let answer2 = prompt('What is ' + randomNum21 + ' + ' + randomNum22 + ' ?');
+let end2 = Date.now()
+let result2 = (end2 - start2) / 1000
+if (answer2 == (randomNum21 + randomNum22)) {
+    corin = ('CORRECT');
+} else (corin = 'INCORRECT');
+alert('You answered ' + answer2 + ' in ' + result2 + ' seconds.' + ' Your answer was ' + corin);
+
+let start3 = Date.now()
+let answer3 = prompt('What is ' + randomNum31 + ' + ' + randomNum32 + ' ?');
+let end3 = Date.now()
+let result3 = (end3 - start3) / 1000
+if (answer3 == (randomNum31 + randomNum32)) {
+    corin = ('CORRECT');
+} else (corin = 'INCORRECT');
+alert('You answered ' + answer3 + ' in ' + result3 + ' seconds.' + ' Your answer was ' + corin);
