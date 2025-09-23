@@ -22,19 +22,7 @@ console.log(convertTemp(10, 'f')); // Expected output: 50
 
 /*
 //Q4 getWordLengths
-let words = ['apple', 'banana', 'cherry', 'pear', 'grape'];
 
-let getWordLengths = [];
-
-let getWordLengths = [];
-for (let word of words) [
-    str.length
-]
-
-function getWordLengths(words) {
-    for ()
-
-*/
 let words = ['apple', 'banana', 'cherry', 'pear', 'grape'];
 function getWordLengths(words) {
     let lengths = [];
@@ -45,3 +33,35 @@ function getWordLengths(words) {
 }
 
 console.log(getWordLengths(words));
+*/
+
+/*
+//Q5 getLongestWord
+
+let words = ['apple', 'banana', 'cherry', 'pear', 'grape'];
+
+function getLongestWord(words) {
+    let longest = "";
+    for (let i = 0; i < words.length; i++) {
+        if (words[i].length > longest.length) {
+            longest = words[i];
+        }
+    }
+    return longest;
+}
+
+console.log(getLongestWord(words));
+*/
+
+//Q6 getOddNumbers
+let results = [];
+function getOddNumbers(numbers) {
+    for (let i = 0; i < numbers.length; i++) {
+        if (numbers[i] % 2 !== 0) {
+            results.push(numbers[i]);
+        }
+    }
+    return results;
+}
+
+console.log(getOddNumbers([1, 2, 3, 4, 5]))
