@@ -53,6 +53,7 @@ function getLongestWord(words) {
 console.log(getLongestWord(words));
 */
 
+/*
 //Q6 getOddNumbers
 let results = [];
 function getOddNumbers(numbers) {
@@ -65,3 +66,22 @@ function getOddNumbers(numbers) {
 }
 
 console.log(getOddNumbers([1, 2, 3, 4, 5]))
+*/
+
+//Q7 filterNumbers
+let results = [];
+
+function filterNumbers(numbers, evenOrOdd) {
+    for (let i = 0; i < numbers.length; i++) {
+        let num = numbers[i];
+        if (num % 2 == 0 && evenOrOdd == 'even') {
+            results.push(num);
+        } else if (num % 2 !== 0 && evenOrOdd == 'odd') {
+            results.push(num);
+        }
+    }
+    return results;
+}
+
+
+console.log(filterNumbers([1, 2, 3, 4, 5], 'even'));
