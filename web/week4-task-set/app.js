@@ -88,6 +88,7 @@ function filterNumbers(numbers, evenOrOdd) {
 console.log(filterNumbers([1, 2, 3, 4, 5], 'even'));
 */
 
+/*
 //Q8 Even/Odd Response Time Task
 
 //alert
@@ -117,3 +118,21 @@ for (let i = 0; i < 5; i++) {
 }
 
 console.log(answers)
+*/
+
+
+//Q5 getLongestWord
+
+let words = ['apple', 'specificity', 'cherry', 'pear', 'grape'];
+
+function getLongestWord(words) {
+    let longest = "";
+    for (let i = 0; i < words.length; i++) {
+        if (words[i].length > longest.length) {
+            longest = words[i];
+        }
+    }
+    return longest;
+}
+
+console.log(getLongestWord(words));
