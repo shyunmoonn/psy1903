@@ -68,6 +68,7 @@ function getOddNumbers(numbers) {
 console.log(getOddNumbers([1, 2, 3, 4, 5]))
 */
 
+/*
 //Q7 filterNumbers
 let results = [];
 
@@ -85,3 +86,34 @@ function filterNumbers(numbers, evenOrOdd) {
 
 
 console.log(filterNumbers([1, 2, 3, 4, 5], 'even'));
+*/
+
+//Q8 Even/Odd Response Time Task
+
+//alert
+alert("Welcome to the even/odd response time task.\n\nYou are about to see a series of numbers.\n\nIf the number you see is EVEN, type the letter 'e'.\nIf the number you see is odd, type the letter 'o'.\n\nPlease answer as quickly and accurately as possible.")
+
+function getrandomNumber(min, max) {
+    let randomNumber = Math.floor(Math.random() * max) + min;
+    return randomNumber;
+}
+
+let answers = [];
+for (let i = 0; i < 5; i++) {
+    let number = getrandomNumber(1, 20)
+    let start = Date.now()
+    let response = prompt('Number:' + number + '\nType the letter "e" for EVEN\nType the letter "o" for ODD')
+    let end = Date.now()
+    let responseTime = (end - start) / 1000
+    let correct = (number % 2 == 0 && response == 'e') || (number % 2 !== 0 && response == 'o')
+
+    answers.push({
+        number: number,
+        response: response,
+        correct: correct,
+        responseTime: responseTime
+    }
+    )
+}
+
+console.log(answers)
