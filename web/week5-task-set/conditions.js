@@ -8,8 +8,9 @@ for (let i = 0; i < 3; i++) {
     conditions.push({
         num1: num1,
         num2: num2,
-        correctAnswer: correctAnswer
+        correctAnswer: correctAnswer,
     });
-}
+};
 
 console.log(conditions);
+
