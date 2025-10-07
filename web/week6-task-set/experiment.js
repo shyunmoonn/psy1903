@@ -166,6 +166,26 @@ let welcomeTrial = {
 };
 timeline.push(welcomeTrial);
 
+//Likert
+
+var likert_scale = [
+    "Strongly Disagree",
+    "Disagree",
+    "Neutral",
+    "Agree",
+    "Strongly Agree"
+];
+
+
+var trial = {
+    type: jsPsychSurveyLikert,
+    questions: [
+        { prompt: "I enjoy solving math problems.", name: 'enjoy', labels: likert_scale },
+        { prompt: "I find math easy.", name: 'easy', labels: likert_scale },
+    ]
+};
+timeline.push(trial);
+
 
 //3 trials
 let mathTrial = [];
