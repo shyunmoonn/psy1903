@@ -1,0 +1,25 @@
+.headingHighlight {
+    background-color: teal;
+    border-radius: 5px;
+    width: 100%;
+    padding: 10px;
+    color: white;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+
+}
+
+.equationsSize {
+    font-size: 36px;
+}
+
+.numbersHighlight {
+    background-color: yellow;
+    width: 100%;
+    padding: 10px;
+}
+
+.jspsych-display-element input[type=text] {
+    font-size: 36px;
+    text-align: center;
+    width: 100px;
+}
