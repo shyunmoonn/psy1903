@@ -194,7 +194,7 @@ for (let i = 0; i < 3; i++) {
     mathTrial.push({
         type: jsPsychSurveyHtmlForm,
         preamble: `<p class='equationsSize'>What is <span class='numbersHighlight'>${conditions[i].num1}</span> + <span class='numbersHighlight'>${conditions[i].num2}?</span></p>`,
-        html: `<p><input type='text' name='answer' id='answer'></p>`,
+        html: `<p><input type='number' name='answer' id='answer'></p>`,
         autofocus: 'answer',
         button_label: 'Submit Answer',
         data: {
@@ -204,7 +204,7 @@ for (let i = 0; i < 3; i++) {
             correctAnswer: conditions[i].num1 + conditions[i].num2,
         },
         on_finish: function (data) {
-            data.answer = data.response.answer;
+            data.answer = Number(data.response.answer);
             data.correct = (data.answer === data.correctAnswer);
         }
     })
@@ -221,14 +221,38 @@ let debriefTrial = {
     `,
     choices: ['NO KEYS'],
     on_start: function () {
+        let prefix = 'mrt';
+        let dataPipeExperimentId = 'your-experiment-id-here';
+        let forceOSFSave = false;
         let data = jsPsych.data
             .get()
             .filter({ collect: true })
-            .ignore(['response', 'stimulus', 'trial_type', 'trial_index', 'plugin_version', 'collect'])
+            .ignore(['stimulus', 'trial_type', 'trial_index', 'plugin_version', 'collect'])
             .csv();
-        console.log(data);
+        let participantId = new Date().toISOString().replace(/T/, '-').replace(/\..+/, '').replace(/:/g, '-');
+        let isLocalHost = window.location.href.includes('localhost');
+        let destination = '/save';
+        if (!isLocalHost || forceOSFSave) {
+            destination = 'https://pipe.jspsych.org/api/data/';
+        }
+        fetch(destination, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                Accept: '*/*',
+            },
+            body: JSON.stringify({
+                experimentID: dataPipeExperimentId,
+                filename: prefix + '-' + participantId + '.csv',
+                data: data,
+            }),
+        }).then(data => {
+            console.log(data);
+            jsPsych.finishTrial();
+        })
     }
 }
+
 timeline.push(debriefTrial);
 
 jsPsych.run(timeline);
