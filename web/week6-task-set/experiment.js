@@ -182,7 +182,8 @@ var trial = {
     questions: [
         { prompt: "I enjoy solving math problems.", name: 'enjoy', labels: likert_scale },
         { prompt: "I find math easy.", name: 'easy', labels: likert_scale },
-    ]
+    ],
+    data: { collect: true }
 };
 timeline.push(trial);
 
