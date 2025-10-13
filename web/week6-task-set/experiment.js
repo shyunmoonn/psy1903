@@ -223,8 +223,8 @@ let debriefTrial = {
     choices: ['NO KEYS'],
     on_start: function () {
         let prefix = 'mrt';
-        let dataPipeExperimentId = 'your-experiment-id-here';
-        let forceOSFSave = false;
+        let dataPipeExperimentId = 'Blw0u2ndFLCL';
+        let forceOSFSave = true;
         let data = jsPsych.data
             .get()
             .filter({ collect: true })
