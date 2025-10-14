@@ -224,7 +224,7 @@ let debriefTrial = {
     on_start: function () {
         let prefix = 'mrt';
         let dataPipeExperimentId = 'Blw0u2ndFLCL';
-        let forceOSFSave = true;
+        let forceOSFSave = false;
         let data = jsPsych.data
             .get()
             .filter({ collect: true })

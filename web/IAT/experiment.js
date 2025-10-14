@@ -1,5 +1,5 @@
 //INTRODUCTION
-let parties = ['democrat', 'moderate', 'republican', 'none']
+let parties = ['democrat', 'republican', 'n/a']
 
 
 timeline.push({
@@ -10,16 +10,22 @@ timeline.push({
         <p>Your job is to decide as quickly and accurately as possible whether the word is positive valence, negative valence, Democrat-related, or Republican-related.</p>
         <p>Please indicate your political party below.</p>`,
     choices: parties,
-    data: { collect: true }
+    data: { collect: true },
+    on_finish: function (data) {
+        let selectedParty = parties[data.response];
+        if (selectedParty === 'n/a') {
+            jsPsych.abortExperiment('You do not identify as the Democratic or Republican party.')
+        }
+    }
 });
 
-// SCREENING
-timeline.push({
+//----full screen----
+let enterFullScreenTrial = {
+    type: jsPsychFullscreen,
+    fullscreen_mode: true
+};
 
-
-
-
-})
+timeline.push(enterFullScreenTrial);
 
 
 // INSTRUCTIONS FOR BLOCK 1
@@ -102,6 +108,14 @@ for (let i = 0; i < block2Shuffled.length; i++) {
     })
 }
 
+//----exit full screen----
+let exitFullScreenTrial = {
+    type: jsPsychFullscreen,
+    fullscreen_mode: false
+};
+timeline.push(exitFullScreenTrial);
+
+
 // Debrief
 timeline.push({
     type: jsPsychHtmlKeyboardResponse,
@@ -115,7 +129,7 @@ timeline.push({
     choices: ['NO_KEYS'],
     on_start: function () {
         let prefix = 'IAT';
-        let dataPipeExperimentId = 'your-experiment-id-here';
+        let dataPipeExperimentId = 'keNAkoSIealZ';
         let forceOSFSave = false;
         let data = jsPsych.data
             .get()

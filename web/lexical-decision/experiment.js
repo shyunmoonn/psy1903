@@ -1,9 +1,49 @@
-let jsPsych = initJsPsych();
+let jsPsych = initJsPsych({
+    show_progress_bar: true
+});
+
+
 
 let timeline = [];
 
+// Retrieve the query string from the URL
+let queryString = new URLSearchParams(window.location.search);
+
+// Extract the value for qualtricsId from the query string
+let qualtricsId = queryString.get('qualtricsId');
+
+// Attach the value for qualtricsId to your experiment data, using the 'addProperties' method
+// ({property called "qualtricsID": set it to the value we just retrieved above }); 
+jsPsych.data.addProperties({ qualtricsId: qualtricsId });
+
+
 // let conditions = [...redacted for brevity - see above...]
 
+let ageCheckTrial = {
+    type: jsPsychSurveyHtmlForm,
+    html: `
+    <h1>Welcome!</h1> 
+    Please enter your age to continue: <input type='text' name='age' id='age'>
+    `,
+    autofocus: 'age',
+    on_finish: function (data) {
+        if (data.response.age < 18) {
+            jsPsych.abortExperiment('You must be 18 years or older to complete this experiment.');
+        }
+    }
+}
+timeline.push(ageCheckTrial);
+
+//----full screen----
+let enterFullScreenTrial = {
+    type: jsPsychFullscreen,
+    fullscreen_mode: true
+};
+
+timeline.push(enterFullScreenTrial);
+
+
+//----welcome trial----
 let welcomeTrial = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: `
@@ -16,6 +56,32 @@ let welcomeTrial = {
 };
 timeline.push(welcomeTrial);
 
+
+//-----prime trial----
+let primeTrial = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: `
+        <p>You were randomly chosen to see this trial.</p> 
+        <p>Press the <span class='key'>SPACE</span> key to continue.</p>
+        `,
+    choices: [' '],
+    data: {
+        collect: true,
+        trialType: 'prime',
+    },
+    on_load: function () {
+        if (getRandomNumber(0, 1) == 0) {
+            jsPsych.data.addProperties({ sawPrime: false });
+            jsPsych.finishTrial();
+        } else {
+            jsPsych.data.addProperties({ sawPrime: true });
+        }
+    }
+}
+timeline.push(primeTrial);
+
+
+//----instructions----
 for (let block of conditions) {
 
     let blockIntroTrial = {
@@ -32,6 +98,9 @@ for (let block of conditions) {
 
     timeline.push(blockIntroTrial);
 
+
+
+    //----main trials----
     // Randomize the conditions in this block
     blockConditions = jsPsych.randomization.repeat(block.conditions, 1);
 
@@ -40,13 +109,14 @@ for (let block of conditions) {
             type: jsPsychHtmlKeyboardResponse,
             stimulus: `<h1>${condition.characters}</h1>`,
             data: {
+                trialType: 'mainTrials',
                 collect: true,
                 characters: condition.characters,
                 blockId: block.title, // ⭐ Add a block id to our results data
             },
             choices: ['f', 'j'],
             on_finish: function (data) {
-                if (data.response == 'f' && condition.isWord == true) {
+                if (data.response == 'f' && condition.isWord) {
                     data.correct = true;
                 } else if (data.response == 'j' && condition.isWord == false) {
                     data.correct = true;
@@ -56,8 +126,24 @@ for (let block of conditions) {
             }
         }
         timeline.push(conditionTrial);
+
+        let feedbackTrial = {
+            type: jsPsychHtmlKeyboardResponse,
+            stimulus: `<h1 class='incorrectFeedback'>Incorrect</h1>`,
+            trial_duration: 1000,
+            choices: ['NO KEY'],
+            on_load: function () {
+                let lastTrialData = jsPsych.data.getLastTrialData().values()[0];
+                if (lastTrialData.correct) {
+                    // Force skip this feedback trial if they got the previous trial correct
+                    jsPsych.finishTrial();
+                }
+            },
+        }
+        timeline.push(feedbackTrial);
     }
 }
+
 
 let resultsTrial = {
     type: jsPsychHtmlKeyboardResponse,
@@ -72,7 +158,7 @@ let resultsTrial = {
         //  ⭐ Update the following three values as appropriate ⭐
         let prefix = 'lexical-decision';
         let dataPipeExperimentId = 'Blw0u2ndFLCL';
-        let forceOSFSave = true;
+        let forceOSFSave = false;
 
         // Filter and retrieve results as CSV data
         let results = jsPsych.data
@@ -80,6 +166,8 @@ let resultsTrial = {
             .filter({ collect: true })
             .ignore(['stimulus', 'trial_type', 'plugin_version', 'collect'])
             .csv();
+
+        console.log(results)
 
         // Generate a participant ID based on the current timestamp
         let participantId = new Date().toISOString().replace(/T/, '-').replace(/\..+/, '').replace(/:/g, '-');
@@ -112,6 +200,15 @@ let resultsTrial = {
 }
 timeline.push(resultsTrial);
 
+//----exit full screen----
+let exitFullScreenTrial = {
+    type: jsPsychFullscreen,
+    fullscreen_mode: false
+};
+timeline.push(exitFullScreenTrial);
+
+
+//----debrief trial----
 let debriefTrial = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: `
@@ -120,6 +217,7 @@ let debriefTrial = {
     `,
     choices: 'NO_KEYS',
     on_start: function () {
+        jsPsych.progressBar.progress = 1;
         let data = jsPsych.data
             .get()
             .filter({ collect: true })
@@ -131,3 +229,7 @@ let debriefTrial = {
 timeline.push(debriefTrial);
 
 jsPsych.run(timeline);
+
+function getRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
