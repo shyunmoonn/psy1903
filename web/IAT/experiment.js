@@ -46,9 +46,9 @@ for (let i = 0; i < block1Shuffled.length; i++) {
     timeline.push({
         type: jsPsychHtmlKeyboardResponse,
         stimulus: `
-    < span class = 'category1' > <strong>Positive / Democrat</strong> (press F)
-<span class='category2'> <strong>Negative / Republican</strong> (press J)
-    <p class='word'>${target1}</p>`,
+            <span class = 'category1'> <strong>Positive / Democrat</strong> (press F)
+            <span class='category2'> <strong>Negative / Republican</strong> (press J)
+            <p class='word'>${target1}</p>`,
         choices: ['f', 'j'],
         data: {
             collect: true,
