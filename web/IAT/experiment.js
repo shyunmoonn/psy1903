@@ -108,29 +108,20 @@ for (let i = 0; i < block2Shuffled.length; i++) {
     })
 }
 
-//----exit full screen----
-let exitFullScreenTrial = {
-    type: jsPsychFullscreen,
-    fullscreen_mode: false
-};
-timeline.push(exitFullScreenTrial);
 
-
-// Debrief
-timeline.push({
+// Save Results
+let resultsTrial = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: `
-            <h1>Thank you!</h1>
-            <p>The task you just completed is a variant of the Implicit Association Task.</p>
-            <p>In this experiment, we are interested in whether people's own political affiliation affects their responses to different stimuli.</p>
-            <p>By measuring both response speed and accuracy, we can learn more about how people’s own political affiliations may be related to the attitudes they hold toward their own party and the opposite party.</p>
-            <p>Your responses will be combined with those of other participants to help us answer these questions. Individual data will remain confidential.</p>
-            <p>Thank you again for your time and contribution.</p>`,
+    <h1>Please wait...</h1>
+       <span class='loader'></span>
+       <p>We are saving the results of your inputs.</p>
+       `,
     choices: ['NO_KEYS'],
     on_start: function () {
         let prefix = 'IAT';
         let dataPipeExperimentId = 'keNAkoSIealZ';
-        let forceOSFSave = false;
+        let forceOSFSave = true;
         let data = jsPsych.data
             .get()
             .filter({ collect: true })
@@ -155,12 +146,32 @@ timeline.push({
             }),
         }).then(data => {
             console.log(data);
+            jsPsych.finishTrial();
         })
     },
-    on_finish: function () {
-        jsPsych.finishTrial();
-    }
-})
+};
+timeline.push(resultsTrial);
+
+//----exit full screen----
+let exitFullScreenTrial = {
+    type: jsPsychFullscreen,
+    fullscreen_mode: false
+};
+timeline.push(exitFullScreenTrial);
+
+// Debrief
+let debrief = {
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: `
+            <h1>Thank you!</h1>
+            <p>The task you just completed is a variant of the Implicit Association Task.</p>
+            <p>In this experiment, we are interested in whether people's own political affiliation affects their responses to different stimuli.</p>
+            <p>By measuring both response speed and accuracy, we can learn more about how people’s own political affiliations may be related to the attitudes they hold toward their own party and the opposite party.</p>
+            <p>Your responses will be combined with those of other participants to help us answer these questions. Individual data will remain confidential.</p>
+            <p>Thank you again for your time and contribution.</p>`,
+    choices: ['NO KEYS']
+}
+timeline.push(debrief)
 
 jsPsych.run(timeline);
 
