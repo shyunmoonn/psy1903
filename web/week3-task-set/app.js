@@ -1,4 +1,15 @@
 /*
+alert & prompt
+random number generator (1-10): Math.floor(Math.random() * 10) + 1
+reaction time measurement: Date.now() before and after; rt = (end - start) / 1000
+if number = correct: response == (randomNum1 + randomNum2)
+even/odd test: response % 2 == 0
+if/ else if/ else
+submit listener: form.addEventListener('submit', fn)
+string handling: .length, .charAt(0), .charAt(count - 1)
+
+
+/*
 // Identify elements on the page we will update 
 let num1 = document.getElementById('num1');
 let num2 = document.getElementById('num2');

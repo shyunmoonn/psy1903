@@ -1,8 +1,13 @@
 let conditions = [];
 
+function getRandomNumber(min, max) {
+    let randomNumber = Math.floor(Math.random() * max) + min;
+    return randomNumber;
+}
+
 for (let i = 0; i < 3; i++) {
-    let num1 = Math.floor(Math.random() * 10) + 1;
-    let num2 = Math.floor(Math.random() * 10) + 1;
+    let num1 = getRandomNumber(1, 10);
+    let num2 = getRandomNumber(1, 10);
     let correctAnswer = num1 + num2;
 
     conditions.push({

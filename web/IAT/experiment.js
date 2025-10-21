@@ -1,6 +1,19 @@
-//INTRODUCTION
-let parties = ['democrat', 'republican', 'n/a']
 
+//CONSENT FORM
+timeline.push({
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: `
+        <h1>Welcome</h1>
+        <p>The experiment you are about to complete is an educational exercise designed for PSY 1903: Programming for Psychological Scientists</em>; it is not intended as a true scientific experiment.</p>
+        <p>No identifying information will be collected, data will not be shared beyond our class, and your participation is completely voluntary.</p>
+        <p>If you have any questions, please reach out to Dr. Garth Coombs (garthcoombs@fas.harvard.edu), one of the head instructors of PSY 1903.</p>
+        <p>If you agree to participate, press <span class='key'>SPACE</span> to continue.`,
+    choices: [' ']
+});
+
+
+//WELCOME TRIAL
+let parties = ['democrat', 'republican', 'n/a']
 
 timeline.push({
     type: jsPsychHtmlButtonResponse,

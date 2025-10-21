@@ -1,4 +1,4 @@
-/*
+/*---Question 4: MRT (keyboard response)---
 let jsPsych = initJsPsych();
 
 let timeline = [];
@@ -64,10 +64,12 @@ jsPsych.run(timeline);
 */
 
 
+/*----Question 5: MRT (buttons)---
 let jsPsych = initJsPsych();
 
 let timeline = [];
 
+//---- welcome trial ----
 let welcomeTrial = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: `
@@ -80,23 +82,24 @@ let welcomeTrial = {
 };
 timeline.push(welcomeTrial);
 
+//~~~3 trials~~~
 
-//3 trials
+//picking numbers
+    for (let i = 0; i < 3; i++) {
+        let num1 = conditions[i].num1;
+        let num2 = conditions[i].num2;
+        let correctAnswer = conditions[i].correctAnswer;
+        let altAnswer = Math.floor(Math.random() * 10) + 1;
 
-for (let i = 0; i < 3; i++) {
-    let num1 = conditions[i].num1;
-    let num2 = conditions[i].num2;
-    let correctAnswer = conditions[i].correctAnswer;
-    let altAnswer = Math.floor(Math.random() * 10) + 1;
+        // the 'while' loop ensures that altAnswer isn't the same as correctAnswer by picking a new random number until altAnswer is not equal to correctAnswer.      
+        while (altAnswer == correctAnswer) {
+            altAnswer = Math.floor(Math.random() * 10) + 1;
+        }
 
-    // the 'while' loop ensures that altAnswer isn't the same as correctAnswer by picking a new random number until altAnswer is not equal to correctAnswer.      
-    while (altAnswer === correctAnswer) {
-        altAnswer = Math.floor(Math.random() * 10) + 1;
-    }
-
-    //randomizing the order of answer choies 
+//~~~randomizing the order of answer choies~~~
     const choices = jsPsych.randomization.shuffle([altAnswer, correctAnswer]);
 
+//button choices
     let mathTrial = {
         type: jsPsychHtmlButtonResponse,
         stimulus: `<p>What is ${num1} + ${num2}?</p>`,
@@ -110,7 +113,7 @@ for (let i = 0; i < 3; i++) {
         },
         on_finish: function (data) {
             data.answer = choices[data.response];
-            data.correct = (choices[data.response] === correctAnswer);
+            data.correct = (choices[data.response] == correctAnswer);
         }
     }
     timeline.push(mathTrial);
@@ -138,3 +141,4 @@ let debriefTrial = {
 timeline.push(debriefTrial);
 
 jsPsych.run(timeline);
+*/

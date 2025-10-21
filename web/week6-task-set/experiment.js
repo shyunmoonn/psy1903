@@ -1,4 +1,4 @@
-/*
+/*~~~QUESTION 1 SETUP~~~
 let jsPsych = initJsPsych();
 
 let timeline = [];
@@ -64,11 +64,8 @@ jsPsych.run(timeline);
 */
 
 
-
-
-
-
 /*
+//~~~QUESTION 2 CSS~~~
 let jsPsych = initJsPsych();
 
 let timeline = [];
@@ -79,7 +76,7 @@ let welcomeTrial = {
     <h1 class='headingHighlight'>Welcome to the Math Response Time Task!</h1> 
     <p>In this experiment, you will be shown a series of math questions.</p>
     <p>Please answer as quickly and accurately as possible.</p>
-    <p>Press SPACE to begin.</p>
+    <p>Press <span class='key'>SPACE</span> to begin.</p>
     `,
     choices: [' '],
 };
@@ -147,9 +144,7 @@ jsPsych.run(timeline);
 
 
 
-
-
-
+//~~~Q3 LIKERT~~~
 let jsPsych = initJsPsych();
 
 let timeline = [];
@@ -167,7 +162,6 @@ let welcomeTrial = {
 timeline.push(welcomeTrial);
 
 //Likert
-
 var likert_scale = [
     "Strongly Disagree",
     "Disagree",
@@ -256,4 +250,4 @@ let debriefTrial = {
 
 timeline.push(debriefTrial);
 
-jsPsych.run(timeline);
+jsPsych.run(timeline); 
