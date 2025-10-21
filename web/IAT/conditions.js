@@ -7,6 +7,40 @@ let jsPsych = initJsPsych({
 
 let timeline = [];
 
+
+//Practice Trials 
+let posP = ['Brilliant', 'Cheerful', 'Comfort', 'Perfect']
+let negP = ['Agony', 'Abuse', 'Mean', 'Hurt']
+let demP = ['Liberal', 'Left-Wing', 'Pro-choice', 'Gun-control']
+let repP = ['Pro-life', 'Tax-cut', 'RNC', 'State-rights']
+
+
+let posPshuffled = jsPsych.randomization.shuffle(posP)
+let negPshuffled = jsPsych.randomization.shuffle(negP)
+let demPshuffled = jsPsych.randomization.shuffle(demP)
+let repPshuffled = jsPsych.randomization.shuffle(repP)
+
+// Block 1
+let pBlock1 = [
+    ...posPshuffled.slice(0, 2),
+    ...negPshuffled.slice(0, 2),
+    ...demPshuffled.slice(0, 2),
+    ...repPshuffled.slice(0, 2),
+]
+
+let pBlock1Shuffled = jsPsych.randomization.shuffle(pBlock1)
+
+// Block 2
+let pBlock2 = [
+    ...posPshuffled.slice(2, 4),
+    ...negPshuffled.slice(2, 4),
+    ...demPshuffled.slice(2, 4),
+    ...repPshuffled.slice(2, 4),
+]
+
+let pBlock2Shuffled = jsPsych.randomization.shuffle(pBlock2)
+
+
 // Words
 let positive = ['Freedom', 'Happy', 'Honest', 'Fairness', 'Joy', 'Trustworthy', 'Peace', 'Generous'];
 let negative = ['Evil', 'Corrupt', 'Cowardly', 'Terrible', 'Nasty', 'Cruel', 'Dishonest', 'Greed'];

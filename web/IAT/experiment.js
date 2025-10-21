@@ -19,8 +19,8 @@ timeline.push({
     type: jsPsychHtmlButtonResponse,
     stimulus: `
         <h1>Instructions</h1>
-        <p>In this study, you will be asked to press different keys to categorize positive valence, negative valence, or politically charged words.</p>
-        <p>Your job is to decide as quickly and accurately as possible whether the word is positive valence, negative valence, Democrat-related, or Republican-related.</p>
+        <p>In this study, you will be asked to press different keys to categorize positive, negative, or politically charged words.</p>
+        <p>Your job is to decide as quickly and accurately as possible whether the word is positive, negative, Democrat-related, or Republican-related.</p>
         <p>Please indicate your political party below.</p>`,
     choices: parties,
     data: { collect: true },
@@ -40,6 +40,46 @@ let enterFullScreenTrial = {
 
 timeline.push(enterFullScreenTrial);
 
+//PRACTICE TRIAL 1
+timeline.push({
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: `
+        <h1>Practice for Part 1</h1>
+        <p>You will now proceed to the practice of Part 1.</p>
+        <p>Press <span class='key'>SPACE</span> to continue.</p>`,
+    choices: [' ']
+});
+
+timeline.push({
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: `
+        Use <strong>F</strong> for <strong>Positive / Democrat</strong> and <strong> J</strong > for <strong>Negative / Republican</strong>.
+        <p>Press <span class= 'key'>SPACE</span> to begin.</p > `,
+    choices: [' ']
+});
+
+
+for (let i = 0; i < pBlock1Shuffled.length; i++) {
+    let pTarget1 = pBlock1Shuffled[i];
+    timeline.push({
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: `
+            <span class = 'category1'> <strong>Positive / Democrat</strong> (press F)
+            <span class='category2'> <strong>Negative / Republican</strong> (press J)
+            <p class='word'>${pTarget1}</p>`,
+        choices: ['f', 'j']
+    })
+}
+
+//TRANSITION TO REAL BLOCK 1
+timeline.push({
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: `
+        <p>You will now begin the real trials.</p>
+        <p>Press <span class= 'key'>SPACE</span> to begin.</p > `,
+    choices: [' ']
+});
+
 
 // INSTRUCTIONS FOR BLOCK 1
 timeline.push({
@@ -53,7 +93,6 @@ timeline.push({
 
 // ----BLOCK 1------
 // Block 1 Trials
-
 for (let i = 0; i < block1Shuffled.length; i++) {
     let target1 = block1Shuffled[i];
     timeline.push({
@@ -80,6 +119,46 @@ for (let i = 0; i < block1Shuffled.length; i++) {
         }
     })
 }
+
+//PRACTICE TRIAL 2
+timeline.push({
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: `
+        <h1>Practice for Part 2</h1>
+        <p>You will now proceed to the practice.</p>
+        <p>Press <span class='key'>SPACE</span> to continue.</p>`,
+    choices: [' ']
+});
+
+timeline.push({
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: `
+        Use <strong>F</strong> for <strong>Positive / Democrat</strong> and <strong> J</strong > for <strong>Negative / Republican</strong>.
+        <p>Press <span class= 'key'>SPACE</span> to begin.</p > `,
+    choices: [' ']
+});
+
+
+for (let i = 0; i < pBlock2Shuffled.length; i++) {
+    let pTarget2 = pBlock2Shuffled[i];
+    timeline.push({
+        type: jsPsychHtmlKeyboardResponse,
+        stimulus: `
+    <span class='category1'> <strong>Negative / Democrat</strong> (press F)
+        <span class='category2'> <strong>Positive / Republican</strong> (press J)
+            <p class='word'>${pTarget2}</p>`,
+        choices: ['f', 'j']
+    });
+};
+
+//TRANSITION TO REAL BLOCK 2
+timeline.push({
+    type: jsPsychHtmlKeyboardResponse,
+    stimulus: `
+        <p>You will now begin the real trials.</p>
+        <p>Press <span class= 'key'>SPACE</span> to begin.</p > `,
+    choices: [' ']
+});
 
 
 //------INSTRUCTIONS FOR BLOCK 2-------
