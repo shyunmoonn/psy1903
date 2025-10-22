@@ -2,7 +2,7 @@ let jsPsych = initJsPsych();
 let timeline = [];
 
 
-// Welcome
+//----Welcome Trial----
 let welcomeTrial = {
     type: jsPsychHtmlKeyboardResponse,
     stimulus: `
@@ -66,3 +66,5 @@ timeline.push(debriefTrial);
 
 
 jsPsych.run(timeline);
+
+
