@@ -20,7 +20,7 @@ let negPshuffled = jsPsych.randomization.shuffle(negP)
 let demPshuffled = jsPsych.randomization.shuffle(demP)
 let repPshuffled = jsPsych.randomization.shuffle(repP)
 
-// Block 1
+// pBlock 1
 let pBlock1 = [
     ...posPshuffled.slice(0, 2),
     ...negPshuffled.slice(0, 2),
@@ -30,7 +30,7 @@ let pBlock1 = [
 
 let pBlock1Shuffled = jsPsych.randomization.shuffle(pBlock1)
 
-// Block 2
+// pBlock 2
 let pBlock2 = [
     ...posPshuffled.slice(2, 4),
     ...negPshuffled.slice(2, 4),
@@ -72,6 +72,8 @@ let block2 = [
 ]
 
 let block2Shuffled = jsPsych.randomization.shuffle(block2)
+
+
 
 
 
