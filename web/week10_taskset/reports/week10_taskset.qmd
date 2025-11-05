@@ -22,10 +22,12 @@ str(experiment_data)
 #### Q2: Functions ------------------------------------------------
 ```{r}
 ## Generate one or more random numbers between min and max (defaults: one number between 1–10)
+
 getRandomNumber <- function(min = 1, max = 10, number = 1) {
   sample(min:max, number)
 }
 ```
+
 
 ```{r}
 ## Classify reaction times into "Fast", "Slow", or "Unknown" (default threshold = 500ms)
@@ -44,3 +46,184 @@ return(category)
 
 
 ```
+
+#### Q3: Loops vs. Vectorization ------------------------------------------------
+```{r}
+## Q3.1 New Columns-----------------
+
+experiment_data$age <- NA
+
+## Q3.2 Loop Version ------------
+## New column called "age" with random ages
+for (i in 1:nrow(experiment_data)) {
+  if(is.na(experiment_data[i, "age"])) {
+    experiment_data[i, "age"] <- getRandomNumber(18, 65)
+  }
+}
+
+head(experiment_data)
+
+## Q3.3 Vectorized Version ---------
+## Vectorized version of the command above
+
+experiment_data$age <- sample(18:65, nrow(experiment_data), replace = TRUE)
+
+head(experiment_data)
+
+```
+#### Q4: Control Structures on Data Frames ---------------------------
+```{r}
+## Q4.1 Loop ---------
+## new column -> fill with Unknown if NA, otherwise, run classify_rt on rt and fill the new column accordingly
+
+experiment_data$rt_category_loop <- NA
+
+for (i in 1:nrow(experiment_data)) {
+  if (is.na(experiment_data[i, "rt"])) {
+    experiment_data[i, "rt_category_loop"] <- "Unknown"
+  } else {
+    experiment_data[i, "rt_category_loop"] <- classify_rt(experiment_data$rt[i])
+  }
+}
+
+
+## Q4.2 Vectorized Version ---------
+
+experiment_data$rt_category_vec <- NA
+
+experiment_data$rt_category_vec <- ifelse(
+  is.na(experiment_data$rt), "Unknown",
+  classify_rt(experiment_data$rt)
+)
+
+## Q4.3 Compare the Two ---------
+table(loop = experiment_data$rt_category_loop,
+      vec  = experiment_data$rt_category_vec,
+      useNA = "ifany")
+
+
+```
+#### Q5: Debugging Functions -----------------------------
+```{r}
+## Q5.1 Create Buggy Function -------
+## function was reliant on global var
+
+threshold <- 500
+
+flag_fast <- function(rt_vector) {
+  rt_vector <- threshold
+}
+
+flag_fast(experiment_data$rt) 
+
+## Q5.2 Reveal the Bug----------
+#rm(threshold)
+
+## Q5.3 Debug and Fix It --------
+flag_fast <- function(rt_vector) {
+  rt_vector <- 500
+}
+
+```
+
+#### Q6: Debugging Tools in Action -----------------------------
+```{r}
+## Q6.1 Reproduce the Issue --------
+## NA messing things up - na.rm = TRUE
+
+subject_means <- tapply(experiment_data$rt,
+                        experiment_data$condition,
+                        mean)
+print(paste("Mean for control:", subject_means["control"]))
+print(paste("Mean for incongruent:", subject_means["incongruent"]))
+
+## Q6.2 Investigate Missingness --------------
+
+# How many NAs overall?
+sum(is.na(experiment_data$rt))
+
+# How many NAs by condition?
+tapply(is.na(experiment_data$rt), experiment_data$condition, sum)
+
+## Q6.3 Fix the Calculation ----------
+subject_means <- tapply(experiment_data$rt,
+                        experiment_data$condition,
+                        mean,
+                        na.rm = TRUE)
+print(paste("Mean for control:", subject_means["control"]))
+print(paste("Mean for incongruent:", subject_means["incongruent"]))
+
+```
+
+#### Q7: Using AI for Debugging or Refactoring -----------------------
+```{r}
+## 7.1 Buggy Code --------
+## redundant "ifelse"
+
+# experiment_data$rt_category_vec <- ifelse(
+#   is.na(experiment_data$rt), 
+#    "Unknown", 
+#   ifelse(classify_rt(experiment_data$rt_category_vec[i])
+#    )
+#  )
+
+## 7.3 Working code -----------
+experiment_data$rt_category_vec <- NULL
+
+experiment_data$rt_category_vec <- ifelse(
+  is.na(experiment_data$rt), 
+  "Unknown", 
+  sapply(experiment_data$rt, classify_rt)
+)
+
+```
+#### Prompt---------
+
+The error message is: Error in classify_rt(experiment_data$rt_category_vec[i]) : 
+  Error: 'rt' must be numeric.
+  
+The problematic code is: 
+experiment_data$rt_category_vec <- ifelse(
+  is.na(experiment_data$rt), "Unknown", 
+  ifelse(
+  classify_rt(experiment_data$rt_category_vec[i])
+   )
+ )
+ 
+ What I expected to happen: 
+ I expected the code to fill rt_category_vec using using the classify_rt() function.
+
+#### Evaluation: -----------
+
+What did the AI do well?
+ChatGPT gave me a fixed code that works, maintaining the vector ifelse() structure.  
+
+What did you change or verify yourself?
+This is a code that I was able to fix on my own earlier on in the problem set, and it was different than ChatGPT's revision. I realized that I did not need the second 'ifelse' because the ifelse function already has space to input 'if false'. 
+
+
+How did you confirm the fix worked?
+Initially, after I fixed this code in the earlier question of the pset, I ran the revised code again and saw that the rt_category_vec column was filled with "Slow", "Unknown", or "Fast". To check chatgpt's option, I deleted experiment_data$rt_category_vec, then ran ChatGPT's code. 
+
+#### Q8: Saving and Reloading Objects -----------------------------
+```{r}
+## Q8.1 Cleaned Dataset ---------
+
+##csv
+write.csv(experiment_data, file = "../data/cleaned/experiment_data_revised.csv", row.names = FALSE)
+
+##RDS
+saveRDS(experiment_data, file = "../data/cleaned/experiment_data_revised.rds")
+
+## Q8.2 Multiple Objects --------------
+save(experiment_data, subject_means, file = "../data/cleaned/objects.RData")
+
+##clearing environment...
+rm(list = ls())
+
+##...called object.RData back!
+load("../data/cleaned/objects.RData")
+
+```
+
+
