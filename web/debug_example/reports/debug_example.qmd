@@ -1,0 +1,83 @@
+---
+title: "Week 10 Debugging Exercise"
+author: "Shyun Moon"
+format: html
+execute:
+  echo: true
+  warning: true
+  message: true
+---
+
+## Code for debug
+```{r}
+set.seed(1903)
+
+iat_data <- data.frame(
+  subject_id = 1:40,
+  rt = round(rnorm(40, mean = 520, sd = 120)),
+  congruent = sample(c(TRUE, FALSE), 40, replace = TRUE),
+  condition = sample(c("control", "incongruent"), 40, replace = TRUE)
+)
+
+# Randomly assign two NA values in the rt column
+iat_data$rt[sample(1:nrow(iat_data), 2)] <- NA
+
+# Save for later use
+saveRDS(iat_data, file = "../data/raw/iat_data.rds")
+
+```
+
+##Example 1: Missing Object
+```{r}
+## needs fixing
+summary(iat_data_summary)
+## fixed
+iat_data_summary <- summary(iat_data) 
+```
+##Example 2: NA Propagation
+```{r}
+## needs fixing
+mean(iat_data$rt)
+
+##fixed
+mean(iat_data$rt, na.rm=TRUE)
+```
+##Example 3: Wrong Data Type
+```{r}
+## fix
+mean(iat_data$condition)
+
+##fixed
+str(iat_data)
+
+## The condition column is a character or factor — not numeric — so mean() doesn’t make sense.
+## Debugging often starts with checking structure using str() or summary().
+
+```
+## 4. Debugging a Real Bug with traceback() and browser()
+```{r 1. Introduce the Bug}
+
+calculate_group_means <- function(data) {
+  # BUG: using rt instead of data$rt
+  result <- tapply(rt, data$condition, mean, na.rm = TRUE)
+  return(result)
+}
+
+calculate_group_means(iat_data)
+
+#fixed
+calculate_group_means <- function(data) {
+  # BUG: using rt instead of data$rt
+  result <- tapply(data$rt, data$condition, mean, na.rm = TRUE)
+  return(result)
+}
+
+calculate_group_means(iat_data)
+
+```
+
+
+```{r 2. Read the Error, Then Call traceback()}
+
+
+

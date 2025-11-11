@@ -1,0 +1,12 @@
+---
+title: "Processing Individual Participant"
+author: "Your Name"
+format: html
+execute:
+  echo: true
+  warning: true
+  message: false
+---
+This report documents how we import and process each participant's raw data file, summarize it using our fucntions, and combine the results into a single study-level dataset. 
+
+
