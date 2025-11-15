@@ -131,7 +131,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>I can check whether my function loaded by running ls() or objects() in my console and seeing that it is in the environment that I am working in. This step is important because if it is not in the environment, the code won’t know what I’m referencing when I call it later.</li>
 </ul></li>
-<li>We filter RTs to 300-900 ms to prevent outliers (e.g.&nbsp;unnaturally quick or slow reaction times).</li>
 </ul>
 </section>
 <section id="workflow" class="level4">
@@ -165,6 +164,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>participant_rows <span class="ot">&lt;-</span> <span class="fu">lapply</span>(file_list, process_participant)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<ul>
+<li>We filter RTs to 300-900 ms to prevent outliers (e.g.&nbsp;unnaturally quick or slow reaction times).</li>
+</ul>
 </section>
 <section id="combine-into-one-study-level-data-frame" class="level4">
 <h4 class="anchored" data-anchor-id="combine-into-one-study-level-data-frame">Combine into one study-level data frame</h4>

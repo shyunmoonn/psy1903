@@ -23,9 +23,6 @@ How can you check whether your function actually loaded correctly into your envi
     + I can check whether my function loaded by running ls() or objects() in my console and seeing that it is in the environment that I am working in. This step is important because if it is not in the environment, the code won't know what I'm referencing when I call it later. 
 
 
-+ We filter RTs to 300-900 ms to prevent outliers (e.g. unnaturally quick or slow reaction times). 
-
-
 #### Workflow 
 First, each participant's data is imported with the function `process_participant`. Next, missing reaction times are recovered. Once RTs are recovered, accuracy is converted to logical TRUE/FALSE values and the dataset is filtered to include only correct trials, which allows for a calculation of mean RT within the 300–900 ms window. After behavior is summarized, the ESQ score is calculated. Finally, I combine the behavioral summary and the ESQ score into a one-row participant summary. Using `lapply()` and `do.call(rbind, ...)`, I merge all participant summaries into a single study-level data frame that contains one row per subject. I handled missing data by recovering RTs and treating true missing values as 'NA'. 
 
@@ -38,6 +35,7 @@ source("../scripts/process_participant.R")
 source("../scripts/compute_rt_if_missing.R")
 
 ```
+
 
 #### Find Files 
 ```{r Q8}
@@ -53,6 +51,7 @@ file_list <- list.files(
 participant_rows <- lapply(file_list, process_participant)
 
 ```
++ We filter RTs to 300-900 ms to prevent outliers (e.g. unnaturally quick or slow reaction times). 
 
 #### Combine into one study-level data frame
 ```{r}
