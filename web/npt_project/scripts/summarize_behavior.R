@@ -1,25 +1,29 @@
 #### Score Behavioral Data ------------------------------------
 
 
-summarize_behavior <- function(participant_data, rt_min=250, rt_max=900) {
+summarize_behavior <- function(df, rt_min=250, rt_max=900) {
     #Ensure all expected column names are there
-    if (!all(c("block", "trialType", "trial_type", "rt", "correct") %in% names(participant_data)))
+    if (!all(c("block", "trialType", "trial_type", "rt", "correct") %in% names(df))) {
+        warning("Some expected columns are missing. Check your CSV.")
+    }
 
 ## Change correct column to logical
-participant_data$correct <- as.logical(participant_data$correct)
+df$correct <- as.logical(df$correct)
     
 ## Check if rt column is numeric
-if (!is.numeric(participant_data$rt)) participant_data$rt <- as.numeric(participant_data$rt)
+if (!is.numeric(df$rt)) df$rt <- as.numeric(df$rt)
 
 ## Separate data into block and trial types
-practice_filtered  <- participant_data[participant_data$block == "practice", ]
-magnitude_filtered <- participant_data[participant_data$block == "experiment" & participant_data$trial_type == "magnitude", ]
-parity_filtered    <- participant_data[participant_data$block == "experiment" & participant_data$trial_type == "parity", ]
+practice_filtered  <- df[df$block == "practice", ]
+magnitude_filtered <- df[df$block == "experiment" & df$trial_type == "magnitude", ]
+parity_filtered    <- df[df$block == "experiment" & df$trial_type == "parity", ]
+
 
 ## Filter out unreasonable reaction times (keep 250–900 ms)
 practice_filtered  <- practice_filtered[practice_filtered$rt  >= rt_min & practice_filtered$rt  <= rt_max, ]
 magnitude_filtered <- magnitude_filtered[magnitude_filtered$rt >= rt_min & magnitude_filtered$rt <= rt_max, ]
 parity_filtered    <- parity_filtered[parity_filtered$rt    >= rt_min & parity_filtered$rt    <= rt_max, ]
+
 
 ## Calculate mean reaction time and accuracy for each trial type
 practice_mean_rt  <- mean(practice_filtered$rt, na.rm = TRUE)
