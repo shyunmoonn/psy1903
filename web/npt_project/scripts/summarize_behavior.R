@@ -3,9 +3,10 @@
 
 summarize_behavior <- function(df, rt_min=250, rt_max=900) {
     #Ensure all expected column names are there
-    if (!all(c("block", "trialType", "trial_type", "rt", "correct") %in% names(df))) {
-        warning("Some expected columns are missing. Check your CSV.")
-    }
+    # if (!all(c("block", "trialType", "trial_type", "rt", "correct") %in% names(df))) {
+    #     warning("Some expected columns are missing. Check your CSV.")
+    # }
+    # 
 
 ## Change correct column to logical
 df$correct <- as.logical(df$correct)

@@ -5,6 +5,7 @@ process_participant <- function(file_path) {
   
   ## Read the raw CSV
   participant_data <- read.csv(file_path, stringsAsFactors = FALSE)
+
   
   #### Questionnaire score ------------------------------------------------
   ## Score questionnaire with our defaults (reverse 2,4,7 on 0–4 scale)
